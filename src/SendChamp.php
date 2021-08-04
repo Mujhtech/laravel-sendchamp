@@ -9,16 +9,53 @@
 namespace Mujhtech\SendChamp;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
+use Mujhtech\SendChamp\Exceptions\SendChampException;
 
 class SendChamp {
+
+    /**
+     * @var array 
+    */
+
+    private $useCase = ['Transactional', 'Marketing', 'Transactional & Marketing'];
+
+    /**
+     * @var array
+     */
+
+    private $channel = ['VOICE', 'SMS', 'WHATSAPP', 'EMAIL'];
+
+    /**
+     * @var array
+     */
+
+    private $tokenType = ['NUMERIC','ALPHANUMERIC'];
+
+    /**
+     * @var string
+    */
 
     protected $pubicKey;
 
 
+    /**
+     * @var string
+    */
+
     protected $client;
 
 
+    /**
+     * Response from sendchamp api
+     * @var mixed
+    */
+
+
     protected $response;
+
+    /**
+     * @var string
+    */
 
 
     protected $baseUrl;
@@ -31,16 +68,30 @@ class SendChamp {
         $this->setRequestOptions();
     }
 
+    /**
+     * Get base url from sendchamp config
+    */
+
     public function getBaseUrl()
     {
         $this->baseUrl = Config::get('sendchamp.mode') == "live" ? Config::get('sendchamp.baseUrl') : Config::get('sendchamp.sandboxUrl');
     }
 
 
+    /**
+     * Get public key from sendchamp cofig
+    */
+
     public function getKey()
     {
         $this->publicKey = Config::get('sendchamp.mode') == "live" ? Config::get('sendchamp.publicKey') : null;
     }
+
+
+    /**
+     * Set request options 
+     * @return SendChamp
+    */
 
     private function setRequestOptions()
     {
@@ -61,6 +112,15 @@ class SendChamp {
     }
 
 
+    /**
+     * Set http response
+     * @param string $url
+     * @param string $method
+     * @param array $data
+     * @return SendChamp
+    */
+
+
     private function setHttpResponse($url, $method, $body = [])
     {
         if (is_null($method)) {
@@ -76,12 +136,35 @@ class SendChamp {
     }
 
 
+    /**
+     * Decode json response into an array
+     * @return array
+    */
+
+
     private function getResponse()
     {
         return json_decode($this->response->getBody(), true);
     }
 
-    public function createSmsSender(string $sender_name, string $use_case, string $sample_message){
+
+    /**
+     * Create sms sender
+     * @param string $send_name
+     * @param string $use_case
+     * You should pass either of the following: Transactional, Marketing, or Transactional & Marketing
+     * @param string $sample_message
+     * @return array
+    */
+
+    public function createSmsSender(string $sender_name, string $use_case,
+    string $sample_message){
+
+        if(!in_array( $use_case ,$this->useCase )){
+
+            throw new SendChampException("Invalid Use case");
+
+        }
 
         $data = [
             'sample' => $sample_message,
@@ -93,6 +176,22 @@ class SendChamp {
         return $this->setRequestOptions()->setHttpResponse('/sms/send', 'POST', $data)->getResponse();
 
     }
+
+    /**
+     * Send sms
+     * @param string $message
+     * @param string $sender_name
+     * Represents the sender of the message.
+     * This Sender ID must have been requested
+     * via the dashboard or use "Sendchamp" as default
+     * @param array $numbers
+     * This represents the destination phone number.
+     * The phone number(s) must be in the international format
+     * (Example: 23490126727). You can also send to multiple numbers.
+     * To do that put numbers in an array
+     * (Example: [ '234somenumber', '234anothenumber' ]).
+     * @return array
+    */
 
     public function sendSms(string $message, string $sender_name, array $numbers){
 
@@ -107,17 +206,37 @@ class SendChamp {
 
     }
 
+    /**
+     * Get sms status
+     * @param string $sms_id 
+     * ID of the SMS that was sent
+     * @return array
+    */
+
     public function fetchSmsStatus(string $sms_id){
 
         return $this->setRequestOptions()->setHttpResponse('/sms/'.$sms_id.'/report', 'GET', [])->getResponse();
 
     }
 
+    /**
+     * Send voice
+     * @param string $message
+     * @param string $sender_name
+     * Represents the sender of the message.
+     * This Sender ID must have been requested via
+     * the dashboard or use "Sendchamp" as default
+     * @param string $number
+     * The number represents the destination phone number.
+     * The number must be in international format (E.g. 2348012345678)
+     * @return array
+    */
 
-    public function sendVoice(string $message, string $sender_name, string $numbers){
+
+    public function sendVoice(string $message, string $sender_name, string $number){
 
         $data = [
-            'customer_mobile_number' => $numbers,
+            'customer_mobile_number' => $number,
             'message' => $message,
             'sender_name' => $sender_name
         ];
@@ -128,7 +247,22 @@ class SendChamp {
     }
 
 
-    public function sendWhatsappOtp(string $template_code, string $message, string $sender_number, string $recipient){
+    /**
+     * Send whatsapp otp
+     * @param string $template_code
+     * You can find this on the template page under Whatsapp Channel of your Sendchamp dashboard
+     * @param string $sender_number
+     * Your approved Whatsapp number on Sendchamp.
+     * You can use our phone number if you have not registered a number 2347067959173
+     * @param string $recipient
+     * Whatsapp number of the customer you are sending the message to
+     * @param string $message
+     * @return array
+    */
+
+
+    public function sendWhatsappOtp(string $template_code, string $message,
+    string $sender_number, string $recipient){
 
         $data = [
             'recipient' => $recipient,
@@ -141,6 +275,25 @@ class SendChamp {
         return $this->setRequestOptions()->setHttpResponse('/whatsapp/template/send', 'POST', $data)->getResponse();
 
     }
+
+
+    /**
+     * Send otp message
+     * @param string $channel
+     * @param string $token_type
+     * @param int $token_length
+     * The length of the token you want to send to your customer. Minimum is 4
+     * @param int $expiry_day
+     * How long you want to the to be active for in minutes. (E.g 10 means 10 minutes )
+     * @param string $customer_email 
+     * @param string $customer_mobile_number 
+     * @param array $meta_data 
+     * @param string $sender
+     * Specify the sender you want to use. This is important
+     * when using SMS OR Whatsapp Channel or we will select a
+     * default sender from your account. Eg: KUDA OR +234810000000
+     * @return array
+    */
 
     public function sendOtp(string $channel, string $token_type, int $token_length,
      int $expiry_day, string $customer_email, string $customer_mobile_number, array $meta_data, string $sender){
@@ -161,6 +314,13 @@ class SendChamp {
 
     }
 
+    /**
+     * Confirm otp
+     * @param string $reference
+     * @param string $otp
+     * @return array
+    */
+
 
     public function confirmOtp(string $reference, string $otp){
 
@@ -174,6 +334,10 @@ class SendChamp {
 
     }
 
+    /**
+     * Get contacts list
+     * @return array
+    */
 
     public function getContactList(){
         
@@ -181,6 +345,16 @@ class SendChamp {
 
     }
 
+
+    /**
+     * Create or update contact
+     * @param string $lastname
+     * @param string $firstname
+     * @param string $phone
+     * @param string $email
+     * @param string $reference 
+     * @return array
+    */
 
     public function createOrUpdateContact(string $lastname, string $firstname, string $phone, string $email, string $reference){
 
@@ -199,6 +373,12 @@ class SendChamp {
     }
 
 
+    /**
+     * Delete contact
+     * @param string $id 
+     * @return array
+    */
+
     public function deleteContact(string $id){
 
         
@@ -212,7 +392,7 @@ class SendChamp {
      * Get wallet report
      *
      * @return array
-     */
+    */
 
     public function getWalletReport(){
         
