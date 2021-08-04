@@ -84,7 +84,7 @@ class SendChamp {
 
     public function getKey()
     {
-        $this->publicKey = Config::get('sendchamp.mode') == "live" ? Config::get('sendchamp.publicKey') : null;
+        $this->publicKey = Config::get('sendchamp.publicKey');
     }
 
 
