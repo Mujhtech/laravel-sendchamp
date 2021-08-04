@@ -9,6 +9,7 @@ return [
 
     /**
      * Mode 
+     * live or test
      *
      */
     'mode' => 'test',
@@ -31,13 +32,6 @@ return [
      *
      */
     'publicKey' => getenv('SENDCHAMP_PUBLIC_KEY'),
-
-    /**
-     * Secret Key
-     *
-     */
-    'secretKey' => getenv('SENDCHAMP_SECRET_KEY'),
-
 
     /**
      * Webhook

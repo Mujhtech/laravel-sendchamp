@@ -158,7 +158,7 @@ class SendChamp {
     */
 
     public function createSmsSender(string $sender_name, string $use_case,
-    string $sample_message){
+        string $sample_message){
 
         if(!in_array( $use_case ,$this->useCase )){
 
@@ -262,7 +262,7 @@ class SendChamp {
 
 
     public function sendWhatsappOtp(string $template_code, string $message,
-    string $sender_number, string $recipient){
+        string $sender_number, string $recipient){
 
         $data = [
             'recipient' => $recipient,
@@ -296,7 +296,20 @@ class SendChamp {
     */
 
     public function sendOtp(string $channel, string $token_type, int $token_length,
-     int $expiry_day, string $customer_email, string $customer_mobile_number, array $meta_data, string $sender){
+       int $expiry_day, string $customer_email, string $customer_mobile_number, array $meta_data, string $sender){
+
+        if(!in_array($token_type, $this->tokenType)){
+
+            throw new SendChampException("Invalid token type");
+
+        }
+
+        if(!in_array($channel, $this->channel)){
+
+            throw new SendChampException("Invalid channel");
+
+        }
+
 
         $data = [
             'channel' => $channel,
@@ -317,7 +330,9 @@ class SendChamp {
     /**
      * Confirm otp
      * @param string $reference
+     * The unique reference that was returned as response when the OTP was created
      * @param string $otp
+     * The OTP that was sent to the customer.
      * @return array
     */
 
