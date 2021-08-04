@@ -7,13 +7,13 @@
 To get the latest version of Sendchamp, simply require it
 
 ```bash
-composer require mujhtech/laravel-sendchamp
+composer require mujhtech/sendchamp
 ```
 
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"mujhtech/laravel-sendchamp": "1.0.*"
+"mujhtech/sendchamp": "1.0.*"
 ```
 
 Once Laravel Sendchamp is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
