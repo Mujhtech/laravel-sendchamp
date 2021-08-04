@@ -1,33 +1,50 @@
 {
-    "name": "laravel/sendchamp",
-    "description": "Laravel package  for sendchamp api",
-    "require": {
-        "guzzlehttp/guzzle": "^7.3",
-        "php": "^7.2|^8.0",
-        "illuminate/support": "~6|~7|~8"
-    },
-    "authors": [
-        {
-            "name": "Mujhtech",
-            "email": "mujeeb.muhideen@gmail.com"
-        }
-    ],
-    "autoload": {
-        "files": [
-            "src/Helpers.php"
-          ],
-        "psr-4": {
-            "Mujhtech\\SendChamp\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Mujhtech\\SendChamp\\SendChampServiceProvider"
-            ],
-            "aliases": {
-                "SendChamp": "Mujhtech\\SendChamp\\Facades\\SendChamp"
-            }
-        }
+  "name": "mujhtech/laravel-sendchamp",
+  "description": "Laravel package  for sendchamp api",
+  "keywords": [
+    "php",
+    "github",
+    "laravel",
+    "Open Source",
+    "sms",
+    "email",
+    "sendchamp",
+    "whatsapp",
+    "otp",
+    "mujhtech",
+    "laravel 6",
+    "laravel 7",
+    "laravel 8"
+  ],
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "guzzlehttp/guzzle": "^7.3",
+    "php": "^7.2|^8.0",
+    "illuminate/support": "~6|~7|~8"
+  },
+  "authors": [
+    {
+      "name": "Mujhtech",
+      "email": "mujeeb.muhideen@gmail.com"
     }
+  ],
+  "autoload": {
+    "files": [
+      "src/Helpers.php"
+    ],
+    "psr-4": {
+      "Mujhtech\\SendChamp\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Mujhtech\\SendChamp\\SendChampServiceProvider"
+      ],
+      "aliases": {
+        "SendChamp": "Mujhtech\\SendChamp\\Facades\\SendChamp"
+      }
+    }
+  }
 }
