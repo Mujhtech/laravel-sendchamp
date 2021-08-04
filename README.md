@@ -3,10 +3,8 @@
 > A Laravel Package for sendchamp api
 
 ## Installation
-
-[PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
-
-To get the latest version of Laravel Paystack, simply require it
+ 
+To get the latest version of Sendchamp, simply require it
 
 ```bash
 composer require mujhtech/laravel-sendchamp
