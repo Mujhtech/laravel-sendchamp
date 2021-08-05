@@ -130,7 +130,7 @@ class SendChamp {
     private function setHttpResponse($url, $method, $body = [])
     {
         if (is_null($method)) {
-            throw new IsNullException("Empty method not allowed");
+            throw new SendChampException("Empty method not allowed");
         }
 
         $this->response = $this->client->{strtolower($method)}(

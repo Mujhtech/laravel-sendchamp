@@ -29,7 +29,7 @@ class SendChampServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('laravel-sendchamp', function ($app) {
+        $this->app->bind('laravel-sendchamp', function () {
 
             return new SendChamp;
 
