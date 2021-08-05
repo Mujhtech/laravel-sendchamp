@@ -32,6 +32,12 @@ class SendChamp {
     private $tokenType = ['NUMERIC','ALPHANUMERIC'];
 
     /**
+     * @var array
+     */
+
+    private $smsRoute = ['NON_DND_NG', 'DND_NGN','PREMIUM_NG'];
+
+    /**
      * @var string
     */
 
@@ -173,7 +179,7 @@ class SendChamp {
         ];
 
         
-        return $this->setRequestOptions()->setHttpResponse('/sms/send', 'POST', $data)->getResponse();
+        return $this->setRequestOptions()->setHttpResponse('/sms/sender/create', 'POST', $data)->getResponse();
 
     }
 
@@ -193,12 +199,19 @@ class SendChamp {
      * @return array
     */
 
-    public function sendSms(string $message, string $sender_name, array $numbers){
+    public function sendSms(string $message, string $sender_name, array $numbers, string $route = ""){
+
+        if(!empty($route) && !in_array( $route ,$this->smsRoute )){
+
+            throw new SendChampException("Invalid sms route");
+
+        }
 
         $data = [
             'to' => $numbers,
             'message' => $message,
-            'sender_name' => $sender_name
+            'sender_name' => $sender_name,
+            'route' => $route
         ];
 
         

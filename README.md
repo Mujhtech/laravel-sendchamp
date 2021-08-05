@@ -155,9 +155,16 @@ sendchamp()->createSmsSender($sender_name, $use_case, $sample_message);
      * (Example: 23490126727). You can also send to multiple numbers.
      * To do that put numbers in an array
      * (Example: [ '234somenumber', '234anothenumber' ]).
+     * @param string $route e.g ['NON_DND_NG', 'DND_NGN','PREMIUM_NG'] 
      * @return array
+     * 
     */
-SendChamp::sendSms($message, $sender_name, $numbers)
+SendChamp::sendSms($message, $sender_name, $numbers, $route)
+
+/**
+ * Alternatively, use the helper.
+ */
+sendchamp()->sendSms($message, $sender_name, $numbers, $route);
 
 
 /**
