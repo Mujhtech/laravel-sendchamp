@@ -41,7 +41,7 @@ class SendChamp {
      * @var string
     */
 
-    protected $pubicKey;
+    protected $publicKey;
 
 
     /**
@@ -127,7 +127,7 @@ class SendChamp {
     */
 
 
-    private function setHttpResponse($url, $method, $body = [])
+    private function setHttpResponse($url, $method = null, $body = [])
     {
         if (is_null($method)) {
             throw new SendChampException("Empty method not allowed");
