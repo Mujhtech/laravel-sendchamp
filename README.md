@@ -2,6 +2,16 @@
 
 > A Laravel Package for sendchamp api
 
+<p align="center">
+    <a href="https://packagist.org/packages/mujhtech/sendchamp"><img src="http://poser.pugx.org/mujhtech/sendchamp/v" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/mujhtech/sendchamp"><img src="http://poser.pugx.org/mujhtech/sendchamp/v/unstable" alt="Latest Unstable Version"></a>
+    <a href="https://scrutinizer-ci.com/g/Mujhtech/laravel-sendchamp/build-status/master"><img src="https://scrutinizer-ci.com/g/Mujhtech/laravel-sendchamp/badges/build.png?b=master" alt="Build Status"></a>
+    <a href="https://scrutinizer-ci.com/g/Mujhtech/laravel-sendchamp/?branch=master"><img src="https://scrutinizer-ci.com/g/Mujhtech/laravel-sendchamp/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+    <a href="https://scrutinizer-ci.com/g/Mujhtech/laravel-sendchamp/?branch=master"><img src="https://scrutinizer-ci.com/g/Mujhtech/laravel-sendchamp/badges/coverage.png?b=master" alt="Code Coverage"></a>
+    <a href="https://packagist.org/packages/mujhtech/sendchamp"><img src="http://poser.pugx.org/mujhtech/sendchamp/downloads" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/mujhtech/sendchamp"><img src="http://poser.pugx.org/mujhtech/sendchamp/license" alt="License"></a>
+</p>
+
 ## Installation
  
 To get the latest version of Sendchamp, simply require it
