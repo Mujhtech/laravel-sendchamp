@@ -37,6 +37,9 @@
       "Mujhtech\\SendChamp\\": "src/"
     }
   },
+  "scripts": {
+      "test": "vendor/bin/phpunit"
+  },
   "extra": {
     "laravel": {
       "providers": [
