@@ -35,7 +35,7 @@ class SendChamp {
      * @var array
      */
 
-    private $smsRoute = ['non_dnd', 'dnd','PREMIUM_NG'];
+    private $smsRoute = ['non_dnd', 'dnd', 'international', 'PREMIUM_NG'];
 
     /**
      * @var string
