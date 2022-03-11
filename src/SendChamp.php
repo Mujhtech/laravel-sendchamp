@@ -196,6 +196,7 @@ class SendChamp {
      * (Example: 23490126727). You can also send to multiple numbers.
      * To do that put numbers in an array
      * (Example: [ '234somenumber', '234anothenumber' ]).
+     * @param string $route e.g ['non_dnd', 'dnd', 'international'] 
      * @return array
     */
 
