@@ -11,7 +11,7 @@ return [
      * Mode
      * live or test
      */
-    'mode' => 'test',
+    'mode' => 'live',
 
     /**
      * Live API url
