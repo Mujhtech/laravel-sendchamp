@@ -290,6 +290,9 @@ sendchamp()->confirmOtp($reference, $otp);
 
 ```
 
+## Code Quality
+- Run `vendor/bin/pint`
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
