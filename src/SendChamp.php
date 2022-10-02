@@ -23,13 +23,13 @@ class SendChamp {
      * @var array
      */
 
-    private $channel = ['VOICE', 'SMS', 'WHATSAPP', 'EMAIL'];
+    private $channel = ['voice', 'sms', 'whatsapp', 'email'];
 
     /**
      * @var array
      */
 
-    private $tokenType = ['NUMERIC','ALPHANUMERIC'];
+    private $tokenType = ['numeric','alphanumeric'];
 
     /**
      * @var array
@@ -121,13 +121,14 @@ class SendChamp {
     /**
      * Set http response
      * @param string $url
-     * @param string $method
-     * @param array $data
+     * @param null $method
+     * @param array $body
      * @return SendChamp
-    */
+     * @throws SendChampException
+     */
 
 
-    private function setHttpResponse($url, $method = null, $body = [])
+    private function setHttpResponse(string $url, $method = null, array $body = [])
     {
         if (is_null($method)) {
             throw new SendChampException("Empty method not allowed");
