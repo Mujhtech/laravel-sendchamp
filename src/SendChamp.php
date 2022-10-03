@@ -312,7 +312,7 @@ class SendChamp
     {
         $data = [
             'verification_reference' => $reference,
-            'verification_otp' => $otp,
+            'verification_code' => $otp,
         ];
 
         return $this->setRequestOptions()->setHttpResponse('/verification/confirm', 'POST', $data)->getResponse();
