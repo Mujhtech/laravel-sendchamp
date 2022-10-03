@@ -6,10 +6,9 @@
  *
  */
 
-if (! function_exists("sendchamp"))
-{
-    function sendchamp() {
-
+if (! function_exists('sendchamp')) {
+    function sendchamp()
+    {
         return app()->make('laravel-sendchamp');
     }
 }

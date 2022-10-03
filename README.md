@@ -70,7 +70,7 @@ return [
      * live or test
      *
      */
-    'mode' => 'test',
+    'mode' => 'live', // test mode has been removed, the user must buy testing credit on the platform
 
     /**
      * Public Key
@@ -81,6 +81,20 @@ return [
 ];
 ```
 
+## Lumen Configuration
+- Open your bootstrap/app.php
+- Register your service provider 
+- Add your Facade
+- Register the config
+
+```php
+$app->register(Mujhtech\SendChamp\SendChampServiceProvider::class);
+$app->withFacades(true, [
+    SendChamp::class => 'SendChamp',
+]);
+$app->configure('sendchamp');
+```
+    
 ## Usage
 
 Open your .env file and add your api key like so:
@@ -236,14 +250,14 @@ sendchamp()->sendWhatsappOtp($template_code, $message, $sender_number, $recipien
 /**
      * Send otp message
      * @param string $channel
-     * @param string $token_type
-     * @param int $token_length
-     * The length of the token you want to send to your customer. Minimum is 4
+     * @param string $token_type // numeric or alphanumeric
+     * @param int $token_length 
+     * The length of the token you want to send to your customer. Minimum is 5
      * @param int $expiry_day
-     * How long you want to the to be active for in minutes. (E.g 10 means 10 minutes )
+     * How long you want to the to be active for in minutes. (E.g. 10 means 10 minutes )
      * @param string $customer_email 
      * @param string $customer_mobile_number 
-     * @param array $meta_data 
+     * @param array $meta_data can be empty but you need to pass array like ['data' => []]
      * @param string $sender
      * Specify the sender you want to use. This is important
      * when using SMS OR Whatsapp Channel or we will select a
@@ -275,6 +289,9 @@ SendChamp::confirmOtp($reference, $otp)
 sendchamp()->confirmOtp($reference, $otp);
 
 ```
+
+## Code Quality
+- Run `vendor/bin/pint`
 
 ## License
 
